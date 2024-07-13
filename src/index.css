@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.light {
+  --background: 241, 245, 249;
+  --border: 59, 130, 246;
+  --cta: 0, 0, 0;
+  --cta-active: 59, 130, 246;
+  --blink-text-active: 0, 0, 0;
+  --blink-color: 254, 249, 195;
+}
+
+.dark {
+  --background: 15, 23, 42;
+  --border: 59, 130, 246;
+  --cta: 255, 255, 255;
+  --cta-active: 59, 130, 246;
+  --blink-text-active: 0, 0, 0;
+  --blink-color: 254, 249, 195;
+}
