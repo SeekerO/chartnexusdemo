@@ -26,7 +26,6 @@ const TableStocks = ({ data, prev }) => {
   const blink = (name, param1, param2) => {
     if (prev.current.length !== 0 && name !== "") {
       const prev_data = prev.current;
-
       const data_set1 = prev_data.filter((prev1) => prev1.name === name);
       const data_set2 = data.filter((prev1) => prev1.name === name);
 
@@ -38,7 +37,31 @@ const TableStocks = ({ data, prev }) => {
       ) {
         return true;
       }
+
       return false;
+    }
+  };
+
+  const changeAllCompare = (name) => {
+    const prev_data = prev.current;
+    const data_set1 = prev_data.filter((prev1) => prev1.name === name);
+    const data_set2 = data.filter((prev1) => prev1.name === name);
+    if (data_set1.length > 0 && data_set2.length > 0) {
+      const row1 =
+        data_set1[0].last !== data_set2[0].last ||
+        data_set1[0].previous !== data_set2[0].previous ||
+        data_set1[0].volume !== data_set2[0].volume;
+
+      const row2 =
+        data_set1[0].buy_volume !== data_set2[0].buy_volume ||
+        data_set1[0].buy_price !== data_set2[0].buy_price;
+
+      const row3 =
+        data_set1[0].sell_price !== data_set2[0].sell_price ||
+        data_set1[0].sell_volume !== data_set2[0].sell_volume;
+
+      if (row1 && row2 && row3) return true;
+      else return false;
     }
   };
 
@@ -49,7 +72,9 @@ const TableStocks = ({ data, prev }) => {
           {data?.map((stock, index) => (
             <div
               key={index}
-              className={` grid grid-cols-5 pt-1 border-b-[2px] border-gray-200 w-full px-2 `}
+              className={`${
+                changeAllCompare(stock.name) ? "" : "bg-blink text-blinkColor"
+              } grid grid-cols-5 pt-1 border-b-[2px] border-gray-200 w-full px-2 `}
             >
               <div className="flex flex-col w-fit">
                 <label className="">{stock.name}</label>
