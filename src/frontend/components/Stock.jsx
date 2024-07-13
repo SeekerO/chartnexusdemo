@@ -10,10 +10,12 @@ const Stock = () => {
   const [searchParams, setsearchParams] = useSearchParams({
     market_id: "0",
     list_id: "0",
+    theme: false,
   });
 
   const select = searchParams.get("market_id");
   const topselect = searchParams.get("list_id");
+  const mode = searchParams.get("theme");
 
   const prevState = useRef("");
 
