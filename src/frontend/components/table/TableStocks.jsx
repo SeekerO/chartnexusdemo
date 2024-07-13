@@ -1,14 +1,12 @@
-import React, { useEffect, useState, useRef } from "react";
-
 const TableStocks = ({ data, prev }) => {
-  const chng = (last, previous) => {
+  const percentage = (last, previous) => {
     const result = (100 * (last - previous)) / previous;
 
     if (result >= 0) return "+" + result.toFixed(1);
     else return result.toFixed(1);
   };
 
-  const chng1 = (last, previous) => {
+  const changes = (last, previous) => {
     const result = last - previous;
 
     if (result >= 0) return "+" + result.toFixed(1);
@@ -74,21 +72,21 @@ const TableStocks = ({ data, prev }) => {
               >
                 <label
                   className={`${
-                    chng1(stock.last, stock.previous).includes("-")
+                    changes(stock.last, stock.previous).includes("-")
                       ? "text-red-600"
                       : "text-green-600"
                   }`}
                 >
-                  {chng1(stock.last, stock.previous)}
+                  {changes(stock.last, stock.previous)}
                 </label>
                 <label
                   className={`${
-                    chng(stock.last, stock.previous).includes("-")
+                    percentage(stock.last, stock.previous).includes("-")
                       ? "text-red-600"
                       : "text-green-600"
                   }`}
                 >
-                  {chng(stock.last, stock.previous)}%
+                  {percentage(stock.last, stock.previous)}%
                 </label>
               </div>
               <div
