@@ -47,20 +47,21 @@ const TableStocks = ({ data, prev }) => {
     const data_set1 = prev_data.filter((prev1) => prev1.name === name);
     const data_set2 = data.filter((prev1) => prev1.name === name);
     if (data_set1.length > 0 && data_set2.length > 0) {
-      const row1 =
+      const col_vol_last_prev =
         data_set1[0].last !== data_set2[0].last ||
         data_set1[0].previous !== data_set2[0].previous ||
         data_set1[0].volume !== data_set2[0].volume;
 
-      const row2 =
+      const col_buy_vol_price =
         data_set1[0].buy_volume !== data_set2[0].buy_volume ||
         data_set1[0].buy_price !== data_set2[0].buy_price;
 
-      const row3 =
+      const col_sell_vol_price =
         data_set1[0].sell_price !== data_set2[0].sell_price ||
         data_set1[0].sell_volume !== data_set2[0].sell_volume;
 
-      if (row1 && row2 && row3) return true;
+      if (col_vol_last_prev && col_buy_vol_price && col_sell_vol_price)
+        return true;
       else return false;
     }
   };
