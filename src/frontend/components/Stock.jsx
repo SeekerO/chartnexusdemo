@@ -57,7 +57,7 @@ const Stock = () => {
     <div
       className={`${
         !theme ? "light" : "dark"
-      } bg-background h-full w-full items-center justify-center flex`}
+      } duration-300 bg-background h-full w-full items-center justify-center flex`}
     >
       <div className="w-[800px]  h-full flex flex-col p-2">
         <div className="w-full flex justify-between items-end text-cta">
