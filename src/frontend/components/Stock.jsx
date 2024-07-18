@@ -6,24 +6,23 @@ import Switch from "react-switch";
 
 const Stock = () => {
   const [stock_data, setstock_data] = useState([]);
-  const [theme, setTheme] = useState(false);
+  const [theme, setTheme] = useState();
+
   const [searchParams, setsearchParams] = useSearchParams({
     market_id: "0",
     list_id: "0",
-    theme: false,
   });
 
+  const prevState = useRef("");
   const select = searchParams.get("market_id");
   const topselect = searchParams.get("list_id");
-  const mode = searchParams.get("theme");
-
-  const prevState = useRef("");
-
-  useEffect(() => {
-    prevState.current = stock_data;
-  }, [stock_data]);
+  const preferedTheme = window.matchMedia("(prefers-color-scheme: dark)")
+    .matches
+    ? true
+    : false;
 
   useLayoutEffect(() => {
+    LoadThemeColor();
     const fetch = async (market_id, list_id) => {
       setstock_data(await api(market_id, list_id));
     };
@@ -34,6 +33,25 @@ const Stock = () => {
     }, 1000);
     return () => clearInterval(intervalId);
   }, [searchParams]);
+
+  useEffect(() => {
+    prevState.current = stock_data;
+  }, [stock_data]);
+
+  useEffect(() => {
+    window.localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const LoadThemeColor = () => {
+    // light = false && dark = true
+
+    const themeColor = localStorage.getItem("theme");
+    if (themeColor === null) {
+      setTheme(preferedTheme);
+      return localStorage.setItem("theme", preferedTheme);
+    }
+    setTheme(JSON.parse(themeColor));
+  };
 
   return (
     <div

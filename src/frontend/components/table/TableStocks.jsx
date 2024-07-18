@@ -1,4 +1,5 @@
 const TableStocks = ({ data, prev }) => {
+  const prev_data = prev.current;
   const percentage = (last, previous) => {
     const result = (100 * (last - previous)) / previous;
 
@@ -23,11 +24,15 @@ const TableStocks = ({ data, prev }) => {
     return result;
   }
 
+  const prevDataFilter = (name) =>
+    prev_data.filter((prev1) => prev1.name === name);
+
+  const currDataFilter = (name) => data.filter((prev1) => prev1.name === name);
+
   const blink = (name, param1, param2) => {
     if (prev.current.length !== 0 && name !== "") {
-      const prev_data = prev.current;
-      const data_set1 = prev_data.filter((prev1) => prev1.name === name);
-      const data_set2 = data.filter((prev1) => prev1.name === name);
+      const data_set1 = prevDataFilter(name);
+      const data_set2 = currDataFilter(name);
 
       if (
         data_set1.length > 0 &&
@@ -43,9 +48,8 @@ const TableStocks = ({ data, prev }) => {
   };
 
   const changeAllCompare = (name) => {
-    const prev_data = prev.current;
-    const data_set1 = prev_data.filter((prev1) => prev1.name === name);
-    const data_set2 = data.filter((prev1) => prev1.name === name);
+    const data_set1 = prevDataFilter(name);
+    const data_set2 = currDataFilter(name);
     if (data_set1.length > 0 && data_set2.length > 0) {
       const col_vol_last_prev =
         data_set1[0].last !== data_set2[0].last ||
@@ -85,7 +89,7 @@ const TableStocks = ({ data, prev }) => {
                 className={`${
                   blink(stock.name, "last", "volume") &&
                   "bg-blink text-blinkColor"
-                } flex flex-col text-end`}
+                } flex flex-col text-end px-1`}
               >
                 <label>{stock.last.toFixed(3)}</label>
                 <label>{volume(stock.volume)}</label>
@@ -94,14 +98,14 @@ const TableStocks = ({ data, prev }) => {
                 className={`${
                   blink(stock.name, "last", "previous") &&
                   "bg-blink text-blinkColor"
-                } flex flex-col text-end`}
+                } flex flex-col text-end px-1`}
               >
                 <label
                   className={`${
                     changes(stock.last, stock.previous).includes("-")
                       ? "text-red-600"
                       : "text-green-600"
-                  }`}
+                  } px-1`}
                 >
                   {changes(stock.last, stock.previous)}
                 </label>
@@ -110,7 +114,7 @@ const TableStocks = ({ data, prev }) => {
                     percentage(stock.last, stock.previous).includes("-")
                       ? "text-red-600"
                       : "text-green-600"
-                  }`}
+                  } px-1`}
                 >
                   {percentage(stock.last, stock.previous)}%
                 </label>
@@ -119,7 +123,7 @@ const TableStocks = ({ data, prev }) => {
                 className={`${
                   blink(stock.name, "buy_price", "buy_volume") &&
                   "bg-blink text-blinkColor"
-                } flex flex-col text-end`}
+                } flex flex-col text-end px-1`}
               >
                 <label>{stock.buy_price.toFixed(3)}</label>
                 <label>{volume(stock.buy_volume)}</label>
@@ -128,7 +132,7 @@ const TableStocks = ({ data, prev }) => {
                 className={`${
                   blink(stock.name, "sell_price", "sell_volume") &&
                   "bg-blink text-blinkColor"
-                } flex flex-col text-end`}
+                } flex flex-col text-end px-1`}
               >
                 <label>{stock.sell_price.toFixed(3)}</label>
                 <label>{stock.sell_volume}</label>
